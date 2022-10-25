@@ -3,27 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private ProductRepository $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     public function index() {
-        $products = Product::all();
-        return view('home',['products' => $products]);
+        return view('home',['products' => $this->productRepository->getAllProducts()]);
     }
     public function create() {
         return view('create');
     }
     public function store(Request $request) {
-        $product = new Product;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
+        $data = $request->except('_token');
         if($request->hasFile('image')) {
-            $path = $request->file('image')->store('products');
-            $product->image = $path;
+            $data['image'] = $request->file('image')->store('products');
+        }else {
+            $data['image'] = null;
         }
-        $product->save();
-        return redirect()->route('product.store');
+        $this->productRepository->createProduct($data);
+        return redirect()->route('product.create');
     }
 }

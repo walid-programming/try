@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,4 @@ Route::name('product.')->group(function() {
     Route::get('/create', [ProductController::class,'create'])->name('create');
     Route::post('/create', [ProductController::class,'store'])->name('store');
 });
+Route::get('/cat/{categoryId}', [FilterController::class,'filter'])->name('filter');

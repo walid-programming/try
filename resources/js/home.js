@@ -14,6 +14,12 @@ const app = Vue.createApp({
       ]
     }
   },
+  mounted() {
+    fetch('http://127.0.0.1:8000/api/products')
+    .then(res => res.json())
+    .then(data => this.products = data)
+    .catch(err => console.log(err.message))
+  },
   methods: {
     filterByCategory() {
       console.log("filter category");

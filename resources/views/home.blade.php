@@ -23,7 +23,7 @@
       </div>
       <div class="products-wrapper">
         <div class="card" v-for="product in products">
-          <img class="card-img" :src="product.image">
+          <img class="card-img" :src="product['image']" :alt="product.name">
           <div class="card-body">
             <h5 class="card-title">@{{product.name}}</h5>
             <p class="card-desc">@{{product.description}}</p>

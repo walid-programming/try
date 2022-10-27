@@ -1,29 +1,41 @@
 @extends('layouts.app')
 @section('content')
-<div class="card p-3 mt-2">
-  <h1>Home Page</h1>
-  <a href="{{route('product.create')}}"> create new product</a>
-</div>
-<div class="card p-3 mt-2">
-  <div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-9">
-      <div class="row">
-        @foreach ($products as $product)
-        <div class="col-md-4">
-          <div class="card">
-            <img src="{{Storage::url($product->image)}}" class="card-img-top" alt="product-image">
-            <div class="card-body">
-              <h5 class="card-title">{{$product->name}}</h5>
-              <p class="card-text">{{$product->description}}</p>
-              <small>{{$product->price}}</small>
-              <a href="#" class="card-link">Another link</a>
-            </div>
+<div class="container">
+  <div class="header">
+    <h1>home page</h1>
+    <a href="{{route('product.create')}}">new product</a>
+  </div>
+  <div id="app" class="main">
+    <div class="sidebar">
+      <ul v-if="categories.length > 0">
+        <li v-for="category in categories">
+          <span @click="filterByCategory">@{{category.title}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="products">
+      <div class="filter" v-if="products.length > 0">
+        <div class="filter-wrapper">
+          <input type="number" name="" id="">
+          <input type="number" name="" id="">
+          <button @click="filterByPrice">filter</button>
+        </div>
+      </div>
+      <div class="products-wrapper">
+        <div class="card" v-for="product in products">
+          <img class="card-img" :src="product.image">
+          <div class="card-body">
+            <h5 class="card-title">@{{product.name}}</h5>
+            <p class="card-desc">@{{product.description}}</p>
+            <small>@{{product.price}}</small>
           </div>
         </div>
-        @endforeach
       </div>
     </div>
   </div>
 </div>
 @endsection
+@push('scripts')
+<script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
+<script src="{{asset('/js/home.js')}}" defer></script>
+@endpush

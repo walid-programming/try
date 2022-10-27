@@ -8,7 +8,7 @@ use App\Repositories\ICategoryRepository;
 class CategoryRepository implements ICategoryRepository
 {
     public function getAllCategories(){
-        return Category::all();
+        return Category::get(['id','name','parent']);
     }
     public function createCategory(array $data){
         return Category::create($data);

@@ -9,16 +9,16 @@
     <div class="sidebar">
       <ul v-if="categories.length > 0">
         <li v-for="category in categories">
-          <span @click="filterByCategory">@{{category.title}}</span>
+          <span @click="filterByCategory(category.id)">@{{category.name}}</span>
         </li>
       </ul>
     </div>
     <div class="products">
       <div class="filter" v-if="products.length > 0">
         <div class="filter-wrapper">
-          <input type="number" name="" id="">
-          <input type="number" name="" id="">
-          <button @click="filterByPrice">filter</button>
+          <input type="number" min="0" name="" id="" v-model="minPrice">
+          <input type="number" min="0" name="" id="" v-model="maxPrice">
+          <button @click="filterByPrice()">filter</button>
         </div>
       </div>
       <div class="products-wrapper">

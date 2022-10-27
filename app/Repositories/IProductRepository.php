@@ -9,4 +9,5 @@ interface  IProductRepository
     public function getAllProducts();
     public function createProduct(array $product);
     public function getProductsByCategory(Category $catagory);
+    public function getProductByPrice($min,$max);
 }

@@ -9,12 +9,18 @@ use App\Repositories\IProductRepository;
 class ProductRepository implements IProductRepository
 {
     public function getAllProducts(){
-        return Product::all();
+        return Product::get(['id','name','description','image','price']);
     }
     public function createProduct(array $data){
-        return Product::create($data);
+        $product = Product::create($data);
+        $product->categories()->attach($data['category']);
+        return $product;
     }
-    public function getProductsByCategory(Category $category){
-        return $category->products()->get();
+    public function getProductsByCategory($catId){
+        $category = Category::find($catId);
+        return $category->products()->get(['id','name','description','image','price']);
+    }
+    public function getProductByPrice($min,$max) {
+        return Product::whereBetween('price',[$min,$max])->get(['id','name','description','image','price']);
     }
 }
